@@ -5,7 +5,7 @@ A Streamlit web app that predicts diabetes risk using a Decision Tree classifier
 ---
 
 ## 🚀 Live Demo
-👉 **[Open App on Streamlit Cloud](#)** ← replace with your link after deploying
+👉 **https://diabetes-prediction-jewhvuhnwlyng64sg3mckr.streamlit.app/** ← replace with your link after deploying
 
 ---
 
