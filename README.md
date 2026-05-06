@@ -84,7 +84,7 @@ diabetes-predictor/
 
 Also check out my **Breast Cancer Classifier** — classifies tumors as Benign or Malignant using 4 ML algorithms with PDF upload and side-by-side model comparison.
 
-👉 [github.com/yourusername/breast-cancer-classifier](#) ← replace with your link
+👉 https://github.com/Malakhassan8/Breast-cancer-prediction
 
 ---
 
