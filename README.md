@@ -91,11 +91,3 @@ Also check out my **Breast Cancer Classifier** — classifies tumors as Benign o
 ## ⚠️ Disclaimer
 
 This application is for **educational purposes only** and does not constitute medical advice. Always consult a qualified healthcare professional for diagnosis and treatment.
-
----
-
-## 👤 Author
-
-**Your Name**
-- LinkedIn: [linkedin.com/in/yourprofile](#)
-- GitHub: [github.com/yourusername](#)
