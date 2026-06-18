@@ -8,7 +8,6 @@ warnings.filterwarnings("ignore")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# ── Page config ──────────────────────────────────────────────────
 st.set_page_config(
     page_title="GlucoLens — Diabetes Predictor",
     page_icon="🩸",
@@ -16,7 +15,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ── CSS ──────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
@@ -109,16 +107,15 @@ h1,h2,h3 { font-family: 'Playfair Display', serif !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Feature metadata ─────────────────────────────────────────────
 FEATURES = [
-    {"name": "Pregnancies",               "desc": "Number of times pregnant",                             "min": 0,   "max": 20,  "step": 1,     "fmt": "%d",   "normal": "0–5",                   "unit": "",      "type": "int",   "regex": r"pregnancies[\s:=]+(\d+)"},
-    {"name": "Glucose",                   "desc": "Plasma glucose concentration (mg/dL)",                "min": 0,   "max": 300, "step": 1,     "fmt": "%d",   "normal": "70–100 mg/dL (fasting)", "unit": "mg/dL", "type": "int",   "regex": r"glucose[\s:=]+(\d+(?:\.\d+)?)"},
-    {"name": "Blood Pressure",            "desc": "Diastolic blood pressure (mm Hg)",                    "min": 0,   "max": 200, "step": 1,     "fmt": "%d",   "normal": "60–80 mm Hg",            "unit": "mm Hg", "type": "int",   "regex": r"blood[\s_]pressure[\s:=]+(\d+(?:\.\d+)?)"},
-    {"name": "Skin Thickness",            "desc": "Triceps skinfold thickness (mm)",                     "min": 0,   "max": 100, "step": 1,     "fmt": "%d",   "normal": "10–30 mm",               "unit": "mm",    "type": "int",   "regex": r"skin[\s_]thickness[\s:=]+(\d+(?:\.\d+)?)"},
-    {"name": "Insulin",                   "desc": "2-Hour serum insulin (µU/mL)",                        "min": 0,   "max": 900, "step": 1,     "fmt": "%d",   "normal": "16–166 µU/mL",           "unit": "µU/mL", "type": "int",   "regex": r"insulin[\s:=]+(\d+(?:\.\d+)?)"},
-    {"name": "BMI",                       "desc": "Body mass index (weight in kg / height in m²)",       "min": 0.0, "max": 70.0,"step": 0.1,   "fmt": "%.1f", "normal": "18.5–24.9",              "unit": "kg/m²", "type": "float", "regex": r"bmi[\s:=]+(\d+(?:\.\d+)?)"},
-    {"name": "Diabetes Pedigree Function","desc": "Genetic diabetes risk score based on family history", "min": 0.0, "max": 3.0, "step": 0.001, "fmt": "%.3f", "normal": "0.0–0.5 (low family risk)","unit": "",     "type": "float", "regex": r"(?:diabetes[\s_]pedigree|dpf|pedigree)[\s:=]+(\d+(?:\.\d+)?)"},
-    {"name": "Age",                       "desc": "Age in years",                                        "min": 0,   "max": 120, "step": 1,     "fmt": "%d",   "normal": "—",                      "unit": "years", "type": "int",   "regex": r"age[\s:=]+(\d+)"},
+    {"name": "Pregnancies",                "desc": "Number of times pregnant",                              "min": 0,   "max": 20,  "step": 1,     "fmt": "%d",   "normal": "0-5",                    "unit": "",      "type": "int",   "regex": r"pregnancies[\s:=]+(\d+)"},
+    {"name": "Glucose",                    "desc": "Plasma glucose concentration (mg/dL)",                 "min": 0,   "max": 300, "step": 1,     "fmt": "%d",   "normal": "70-100 mg/dL (fasting)",  "unit": "mg/dL", "type": "int",   "regex": r"glucose[\s:=]+(\d+(?:\.\d+)?)"},
+    {"name": "Blood Pressure",             "desc": "Diastolic blood pressure (mm Hg)",                     "min": 0,   "max": 200, "step": 1,     "fmt": "%d",   "normal": "60-80 mm Hg",             "unit": "mm Hg", "type": "int",   "regex": r"blood[\s_]pressure[\s:=]+(\d+(?:\.\d+)?)"},
+    {"name": "Skin Thickness",             "desc": "Triceps skinfold thickness (mm)",                      "min": 0,   "max": 100, "step": 1,     "fmt": "%d",   "normal": "10-30 mm",                "unit": "mm",    "type": "int",   "regex": r"skin[\s_]thickness[\s:=]+(\d+(?:\.\d+)?)"},
+    {"name": "Insulin",                    "desc": "2-Hour serum insulin (uU/mL)",                         "min": 0,   "max": 900, "step": 1,     "fmt": "%d",   "normal": "16-166 uU/mL",            "unit": "uU/mL", "type": "int",   "regex": r"insulin[\s:=]+(\d+(?:\.\d+)?)"},
+    {"name": "BMI",                        "desc": "Body mass index (weight in kg / height in m2)",        "min": 0.0, "max": 70.0,"step": 0.1,   "fmt": "%.1f", "normal": "18.5-24.9",               "unit": "kg/m2", "type": "float", "regex": r"bmi[\s:=]+(\d+(?:\.\d+)?)"},
+    {"name": "Diabetes Pedigree Function", "desc": "Genetic diabetes risk score based on family history",  "min": 0.0, "max": 3.0, "step": 0.001, "fmt": "%.3f", "normal": "0.0-0.5 (low family risk)","unit": "",      "type": "float", "regex": r"(?:diabetes[\s_]pedigree|dpf|pedigree)[\s:=]+(\d+(?:\.\d+)?)"},
+    {"name": "Age",                        "desc": "Age in years",                                         "min": 0,   "max": 120, "step": 1,     "fmt": "%d",   "normal": "-",                       "unit": "years", "type": "int",   "regex": r"age[\s:=]+(\d+)"},
 ]
 FEATURE_NAMES = [f["name"] for f in FEATURES]
 
@@ -129,8 +126,8 @@ NORMAL_MAX = {
 }
 FEAT_MAX = {f["name"]: f["max"] for f in FEATURES}
 
-# ── Train models at startup (no .sav files needed) ───────────────
-@st.cache_resource(show_spinner="Training models… this takes ~10 seconds ⏳")
+
+@st.cache_resource(show_spinner="Training models... please wait ~30 seconds")
 def load_models():
     from sklearn.model_selection import train_test_split
     from sklearn.preprocessing import StandardScaler
@@ -150,18 +147,18 @@ def load_models():
 
     scaler = StandardScaler()
     x_train_scaled = scaler.fit_transform(x_train)
-    x_test_scaled  = scaler.transform(x_test)
+    x_test_scaled = scaler.transform(x_test)
 
-model_list = {
-    "Logistic Regression": LogisticRegression(max_iter=200),
-    "Random Forest":       RandomForestClassifier(n_estimators=50, random_state=42),
-    "SVM":                 SVC(random_state=42, probability=True),
-    "KNN":                 KNeighborsClassifier(),
-    "Decision Tree":       DecisionTreeClassifier(random_state=42, class_weight='balanced'),
-    "Gradient Boosting":   GradientBoostingClassifier(n_estimators=50, random_state=42),
-}
+    model_list = {
+        "Logistic Regression": LogisticRegression(max_iter=200),
+        "Random Forest": RandomForestClassifier(n_estimators=50, random_state=42),
+        "SVM": SVC(random_state=42, probability=True),
+        "KNN": KNeighborsClassifier(),
+        "Decision Tree": DecisionTreeClassifier(random_state=42, class_weight='balanced'),
+        "Gradient Boosting": GradientBoostingClassifier(n_estimators=50, random_state=42),
+    }
 
-    models  = {}
+    models = {}
     metrics = {}
     for name, m in model_list.items():
         m.fit(x_train_scaled, y_train)
@@ -169,15 +166,15 @@ model_list = {
         report = classification_report(y_test, y_pred, output_dict=True)
         models[name] = m
         metrics[name] = {
-            "Accuracy":  round(accuracy_score(y_test, y_pred) * 100, 2),
+            "Accuracy": round(accuracy_score(y_test, y_pred) * 100, 2),
             "Precision": round(report['weighted avg']['precision'] * 100, 2),
-            "Recall":    round(report['weighted avg']['recall'] * 100, 2),
-            "F1-Score":  round(report['weighted avg']['f1-score'] * 100, 2),
+            "Recall": round(report['weighted avg']['recall'] * 100, 2),
+            "F1-Score": round(report['weighted avg']['f1-score'] * 100, 2),
         }
 
     return models, scaler, metrics
 
-# ── Helpers ──────────────────────────────────────────────────────
+
 def parse_report(text):
     vals = {}
     text_lower = text.lower()
@@ -189,22 +186,27 @@ def parse_report(text):
             vals[f["name"]] = int(round(v)) if f["type"] == "int" else round(v, 3)
     return vals
 
+
 def risk_color(name, val):
     norm = NORMAL_MAX.get(name, FEAT_MAX.get(name, 100))
     fmax = FEAT_MAX.get(name, 100)
-    pct  = val / fmax if fmax else 0
-    if val <= norm:         return "#22c55e", pct
-    elif val <= norm * 1.3: return "#f59e0b", pct
-    else:                   return "#ef4444", pct
+    pct = val / fmax if fmax else 0
+    if val <= norm:
+        return "#22c55e", pct
+    elif val <= norm * 1.3:
+        return "#f59e0b", pct
+    else:
+        return "#ef4444", pct
+
 
 def show_risk_gauge(input_vals):
     high_risk_count = sum(
         1 for f in FEATURES
         if input_vals[f["name"]] > NORMAL_MAX.get(f["name"], FEAT_MAX.get(f["name"], 100))
     )
-    risk_pct  = high_risk_count / len(FEATURES)
-    color     = "#22c55e" if risk_pct < 0.33 else "#f59e0b" if risk_pct < 0.66 else "#ef4444"
-    label     = "Low Risk" if risk_pct < 0.33 else "Moderate Risk" if risk_pct < 0.66 else "High Risk"
+    risk_pct = high_risk_count / len(FEATURES)
+    color = "#22c55e" if risk_pct < 0.33 else "#f59e0b" if risk_pct < 0.66 else "#ef4444"
+    label = "Low Risk" if risk_pct < 0.33 else "Moderate Risk" if risk_pct < 0.66 else "High Risk"
     bar_width = int(risk_pct * 100)
     st.markdown('<div class="section-header">Overall Risk Gauge</div>', unsafe_allow_html=True)
     st.markdown(f"""
@@ -218,12 +220,13 @@ def show_risk_gauge(input_vals):
       </div>
     </div>""", unsafe_allow_html=True)
 
+
 def show_risk_bars(input_vals):
     st.markdown('<div class="section-header" style="margin-top:1.2rem">Feature Risk Profile</div>', unsafe_allow_html=True)
     for f in FEATURES:
-        val   = input_vals[f["name"]]
-        fmax  = f["max"]
-        pct   = val / fmax if fmax else 0
+        val = input_vals[f["name"]]
+        fmax = f["max"]
+        pct = val / fmax if fmax else 0
         color, _ = risk_color(f["name"], val)
         st.markdown(f"""
         <div style="margin-bottom:0.6rem">
@@ -238,10 +241,9 @@ def show_risk_bars(input_vals):
           </div>
         </div>""", unsafe_allow_html=True)
 
-# ── Load ─────────────────────────────────────────────────────────
+
 models, scaler, metrics = load_models()
 
-# ── Hero ─────────────────────────────────────────────────────────
 st.markdown("""
 <div class="hero">
   <h1>GlucoLens</h1>
@@ -249,31 +251,26 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ── Sidebar ───────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### ⚙️ Settings")
+    st.markdown("### Settings")
     algo = st.selectbox("Algorithm", list(models.keys()), index=0)
     st.markdown("---")
-    st.markdown("### 📋 Normal Ranges")
+    st.markdown("### Normal Ranges")
     for f in FEATURES:
-        if f["normal"] != "—":
+        if f["normal"] != "-":
             st.caption(f"**{f['name']}:** {f['normal']}")
     st.markdown("---")
-    st.caption("⚠️ For educational purposes only. Not a medical diagnosis tool.")
+    st.caption("For educational purposes only. Not a medical diagnosis tool.")
 
-# ── Tabs ──────────────────────────────────────────────────────────
-tab1, tab2 = st.tabs(["🩸 Predict", "📊 Model Comparison"])
+tab1, tab2 = st.tabs(["Predict", "Model Comparison"])
 
-# ════════════════════════════════════════════════════════════════
-# TAB 1 — PREDICT
-# ════════════════════════════════════════════════════════════════
 with tab1:
     col_input, col_result = st.columns([1.1, 0.9], gap="large")
 
     with col_input:
         st.markdown('<div class="section-header">Enter Patient Data</div>', unsafe_allow_html=True)
 
-        uploaded = st.file_uploader("📄 Upload lab report (PDF or TXT) — auto-fills inputs", type=["pdf", "txt"])
+        uploaded = st.file_uploader("Upload lab report (PDF or TXT) - auto-fills inputs", type=["pdf", "txt"])
         auto_vals = {}
         if uploaded:
             try:
@@ -285,9 +282,9 @@ with tab1:
                     text = uploaded.read().decode("utf-8", errors="ignore")
                 auto_vals = parse_report(text)
                 if auto_vals:
-                    st.success(f"✅ Auto-detected {len(auto_vals)}/{len(FEATURES)} fields from report")
+                    st.success(f"Auto-detected {len(auto_vals)}/{len(FEATURES)} fields from report")
                 else:
-                    st.warning("Could not parse values — please enter manually below.")
+                    st.warning("Could not parse values - please enter manually below.")
             except Exception as e:
                 st.warning(f"Could not read file: {e}. Please enter values manually.")
 
@@ -312,17 +309,17 @@ with tab1:
                 st.markdown(f"<div style='padding-top:1.8rem;color:#7d8590;font-size:0.75rem'>{f['unit']}</div>",
                             unsafe_allow_html=True)
 
-        predict_btn    = st.button("🔍 Predict Diabetes Risk", use_container_width=True)
-        all_models_btn = st.button("⚡ Run All Models",        use_container_width=True)
+        predict_btn = st.button("Predict Diabetes Risk", use_container_width=True)
+        all_models_btn = st.button("Run All Models", use_container_width=True)
 
     with col_result:
         st.markdown('<div class="section-header">Result</div>', unsafe_allow_html=True)
 
         if predict_btn:
-            arr        = np.array([[input_vals[n] for n in FEATURE_NAMES]])
+            arr = np.array([[input_vals[n] for n in FEATURE_NAMES]])
             arr_scaled = scaler.transform(arr)
-            m          = models[algo]
-            pred       = int(m.predict(arr_scaled)[0])
+            m = models[algo]
+            pred = int(m.predict(arr_scaled)[0])
 
             conf_str = ""
             if hasattr(m, "predict_proba"):
@@ -330,7 +327,8 @@ with tab1:
                     prob = m.predict_proba(arr_scaled)[0]
                     conf = prob[pred] * 100
                     conf_str = f"<p class='result-sub'>Confidence: <b>{conf:.1f}%</b></p>"
-                except: pass
+                except:
+                    pass
 
             if pred == 0:
                 st.markdown(f"""
@@ -355,28 +353,29 @@ with tab1:
             show_risk_bars(input_vals)
 
         elif all_models_btn:
-            arr        = np.array([[input_vals[n] for n in FEATURE_NAMES]])
+            arr = np.array([[input_vals[n] for n in FEATURE_NAMES]])
             arr_scaled = scaler.transform(arr)
 
-            st.markdown('<div class="section-header">All Models — Side by Side</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-header">All Models - Side by Side</div>', unsafe_allow_html=True)
 
             all_preds = {}
             for name, m in models.items():
-                p    = int(m.predict(arr_scaled)[0])
+                p = int(m.predict(arr_scaled)[0])
                 conf = None
                 if hasattr(m, "predict_proba"):
                     try:
                         prob = m.predict_proba(arr_scaled)[0]
                         conf = prob[p] * 100
-                    except: pass
+                    except:
+                        pass
                 all_preds[name] = {"pred": p, "conf": conf}
 
             votes_diabetic = sum(1 for v in all_preds.values() if v["pred"] == 1)
-            votes_not      = len(all_preds) - votes_diabetic
-            majority       = "Diabetic" if votes_diabetic > votes_not else "Not Diabetic"
-            maj_color      = "#ef4444" if majority == "Diabetic" else "#22c55e"
-            maj_icon       = "⚠️" if majority == "Diabetic" else "✅"
-            agree          = votes_diabetic == len(all_preds) or votes_not == len(all_preds)
+            votes_not = len(all_preds) - votes_diabetic
+            majority = "Diabetic" if votes_diabetic > votes_not else "Not Diabetic"
+            maj_color = "#ef4444" if majority == "Diabetic" else "#22c55e"
+            maj_icon = "⚠️" if majority == "Diabetic" else "✅"
+            agree = votes_diabetic == len(all_preds) or votes_not == len(all_preds)
             agreement_text = "All models agree" if agree else f"{max(votes_diabetic, votes_not)}/{len(all_preds)} models agree"
 
             st.markdown(f"""
@@ -389,11 +388,11 @@ with tab1:
             </div>""", unsafe_allow_html=True)
 
             for name, result in all_preds.items():
-                p        = result["pred"]
-                conf     = result["conf"]
-                label    = "✅ Not Diabetic" if p == 0 else "⚠️ Diabetic"
-                bcolor   = "#22c55e" if p == 0 else "#ef4444"
-                bg       = "#052e16" if p == 0 else "#2d0a0a"
+                p = result["pred"]
+                conf = result["conf"]
+                label = "✅ Not Diabetic" if p == 0 else "⚠️ Diabetic"
+                bcolor = "#22c55e" if p == 0 else "#ef4444"
+                bg = "#052e16" if p == 0 else "#2d0a0a"
                 conf_str = f" · {conf:.1f}% confidence" if conf else ""
                 st.markdown(f"""
                 <div style="background:{bg};border:1px solid {bcolor}44;
@@ -411,7 +410,7 @@ with tab1:
                 st.markdown("""
                 <div style="background:#1a1200;border:1px solid #f59e0b44;border-radius:10px;
                             padding:0.9rem 1.2rem;margin-top:0.5rem;color:#f59e0b;font-size:0.85rem">
-                  ⚠️ <b>Models disagree</b> — this case may be ambiguous.
+                  ⚠️ <b>Models disagree</b> - this case may be ambiguous.
                   Logistic Regression and Gradient Boosting are generally most reliable on this dataset.
                 </div>""", unsafe_allow_html=True)
 
@@ -427,9 +426,6 @@ with tab1:
               or <b>Run All Models</b> to compare all 6 at once</p>
             </div>""", unsafe_allow_html=True)
 
-# ════════════════════════════════════════════════════════════════
-# TAB 2 — MODEL COMPARISON
-# ════════════════════════════════════════════════════════════════
 with tab2:
     st.markdown('<div class="section-header">Algorithm Performance Comparison</div>', unsafe_allow_html=True)
 
@@ -438,7 +434,7 @@ with tab2:
     cols = st.columns(4)
     metric_labels = ["Accuracy", "Precision", "Recall", "F1-Score"]
     for i, lbl in enumerate(metric_labels):
-        best_val  = df_m[lbl].max()
+        best_val = df_m[lbl].max()
         best_algo = df_m.loc[df_m[lbl].idxmax(), "Algorithm"]
         cols[i].markdown(f"""
         <div class="metric-card">
@@ -456,11 +452,11 @@ with tab2:
 
     st.markdown('<div class="section-header">Key Insights</div>', unsafe_allow_html=True)
     insights = [
-        ("🏆 Best Accuracy",   "Logistic Regression achieves the highest accuracy — a strong baseline for tabular medical data."),
-        ("🌲 Best Recall",     "Decision Tree has the highest Recall — it catches the most actual diabetic cases, critical in medical diagnosis."),
-        ("⚡ Best Overall",    "Gradient Boosting offers the best balance between Precision and Recall across all metrics."),
-        ("⚠️ Recall Priority", "In diabetes detection, Recall matters more than Precision — missing a diabetic patient is more dangerous than a false alarm."),
-        ("🏥 Recommendation",  "Use Gradient Boosting for deployment — best overall balance. Pair with Logistic Regression for explainability."),
+        ("Best Accuracy", "Logistic Regression achieves the highest accuracy - a strong baseline for tabular medical data."),
+        ("Best Recall", "Decision Tree has the highest Recall - it catches the most actual diabetic cases, critical in medical diagnosis."),
+        ("Best Overall", "Gradient Boosting offers the best balance between Precision and Recall across all metrics."),
+        ("Recall Priority", "In diabetes detection, Recall matters more than Precision - missing a diabetic patient is more dangerous than a false alarm."),
+        ("Recommendation", "Use Gradient Boosting for deployment - best overall balance. Pair with Logistic Regression for explainability."),
     ]
     for icon_title, body in insights:
         st.markdown(f"""
