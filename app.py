@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import os
-import pickle
 import re
 import warnings
 warnings.filterwarnings("ignore")
@@ -130,35 +129,51 @@ NORMAL_MAX = {
 }
 FEAT_MAX = {f["name"]: f["max"] for f in FEATURES}
 
-# ── Load models from .sav files ──────────────────────────────────
-@st.cache_resource(show_spinner="Loading models…")
+# ── Train models at startup (no .sav files needed) ───────────────
+@st.cache_resource(show_spinner="Training models… this takes ~10 seconds ⏳")
 def load_models():
-    lr  = pickle.load(open(os.path.join(BASE_DIR, "logistic_regression.sav"), "rb"))
-    rf  = pickle.load(open(os.path.join(BASE_DIR, "random_forest.sav"),       "rb"))
-    svm = pickle.load(open(os.path.join(BASE_DIR, "svm.sav"),                 "rb"))
-    knn = pickle.load(open(os.path.join(BASE_DIR, "knn.sav"),                 "rb"))
-    dt  = pickle.load(open(os.path.join(BASE_DIR, "decision_tree.sav"),       "rb"))
-    gb  = pickle.load(open(os.path.join(BASE_DIR, "gradient_boosting.sav"),   "rb"))
-    scaler = pickle.load(open(os.path.join(BASE_DIR, "scaler.sav"),           "rb"))
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+    from sklearn.svm import SVC
+    from sklearn.neighbors import KNeighborsClassifier
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.metrics import accuracy_score, classification_report
 
-    models = {
-        "Logistic Regression": lr,
-        "Random Forest":       rf,
-        "SVM":                 svm,
-        "KNN":                 knn,
-        "Decision Tree":       dt,
-        "Gradient Boosting":   gb,
+    df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv")
+
+    x = df.drop('Outcome', axis=1)
+    y = df['Outcome']
+
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+
+    scaler = StandardScaler()
+    x_train_scaled = scaler.fit_transform(x_train)
+    x_test_scaled  = scaler.transform(x_test)
+
+    model_list = {
+        "Logistic Regression": LogisticRegression(),
+        "Random Forest":       RandomForestClassifier(random_state=42),
+        "SVM":                 SVC(random_state=42, probability=True),
+        "KNN":                 KNeighborsClassifier(),
+        "Decision Tree":       DecisionTreeClassifier(random_state=42, class_weight='balanced'),
+        "Gradient Boosting":   GradientBoostingClassifier(random_state=42),
     }
 
-    # ⚠️ Replace these with your actual notebook results after running
-    metrics = {
-        "Logistic Regression": {"Accuracy": 77.92, "Precision": 72.00, "Recall": 62.00, "F1-Score": 67.00},
-        "Random Forest":       {"Accuracy": 75.32, "Precision": 68.00, "Recall": 58.00, "F1-Score": 63.00},
-        "SVM":                 {"Accuracy": 76.62, "Precision": 70.00, "Recall": 60.00, "F1-Score": 65.00},
-        "KNN":                 {"Accuracy": 74.03, "Precision": 66.00, "Recall": 57.00, "F1-Score": 61.00},
-        "Decision Tree":       {"Accuracy": 72.08, "Precision": 65.00, "Recall": 63.00, "F1-Score": 64.00},
-        "Gradient Boosting":   {"Accuracy": 77.27, "Precision": 71.00, "Recall": 61.00, "F1-Score": 66.00},
-    }
+    models  = {}
+    metrics = {}
+    for name, m in model_list.items():
+        m.fit(x_train_scaled, y_train)
+        y_pred = m.predict(x_test_scaled)
+        report = classification_report(y_test, y_pred, output_dict=True)
+        models[name] = m
+        metrics[name] = {
+            "Accuracy":  round(accuracy_score(y_test, y_pred) * 100, 2),
+            "Precision": round(report['weighted avg']['precision'] * 100, 2),
+            "Recall":    round(report['weighted avg']['recall'] * 100, 2),
+            "F1-Score":  round(report['weighted avg']['f1-score'] * 100, 2),
+        }
 
     return models, scaler, metrics
 
