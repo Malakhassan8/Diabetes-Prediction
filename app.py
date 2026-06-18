@@ -152,14 +152,14 @@ def load_models():
     x_train_scaled = scaler.fit_transform(x_train)
     x_test_scaled  = scaler.transform(x_test)
 
-    model_list = {
-        "Logistic Regression": LogisticRegression(),
-        "Random Forest":       RandomForestClassifier(random_state=42),
-        "SVM":                 SVC(random_state=42, probability=True),
-        "KNN":                 KNeighborsClassifier(),
-        "Decision Tree":       DecisionTreeClassifier(random_state=42, class_weight='balanced'),
-        "Gradient Boosting":   GradientBoostingClassifier(random_state=42),
-    }
+model_list = {
+    "Logistic Regression": LogisticRegression(max_iter=200),
+    "Random Forest":       RandomForestClassifier(n_estimators=50, random_state=42),
+    "SVM":                 SVC(random_state=42, probability=True),
+    "KNN":                 KNeighborsClassifier(),
+    "Decision Tree":       DecisionTreeClassifier(random_state=42, class_weight='balanced'),
+    "Gradient Boosting":   GradientBoostingClassifier(n_estimators=50, random_state=42),
+}
 
     models  = {}
     metrics = {}
