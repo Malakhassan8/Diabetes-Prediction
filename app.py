@@ -155,7 +155,6 @@ def load_models():
         "SVM": SVC(random_state=42, probability=True),
         "KNN": KNeighborsClassifier(),
         "Decision Tree": DecisionTreeClassifier(random_state=42, class_weight='balanced'),
-        "Gradient Boosting": GradientBoostingClassifier(n_estimators=50, random_state=42),
     }
 
     models = {}
